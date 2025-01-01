@@ -60,7 +60,7 @@ export default function top_categaries() {
                 alt="Desk Chair"
                 className="transition-transform duration-300 group-hover:scale-105"
                 sizes="100vw"
-              ></img>
+              />
               <div className=" absolute inset-0 bg-gradient-to-t from-black/90 to-transparent">
                 <div className="absolute bottom-0 p-6">
                   <h3 className="mb-2 font-inter text-xl font-medium text-white">

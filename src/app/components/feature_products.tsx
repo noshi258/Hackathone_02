@@ -1,6 +1,7 @@
 import React from "react";
 import { PiShoppingCartLight } from "react-icons/pi";
 
+
 export default function feature_products() {
   return (
     <div className=" container mx-auto px-4 py-20">

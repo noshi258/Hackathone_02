@@ -5,14 +5,6 @@ import { FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaPinterest } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
-import { FaCcMastercard } from "react-icons/fa";
-import { FaPaypal } from "react-icons/fa";
-import { SiAmericanexpress } from "react-icons/si";
-import { FaCcVisa } from "react-icons/fa";
-
-
-
-
 
 export default function footer() {
   return (
@@ -43,38 +35,38 @@ export default function footer() {
               >
                 <FaFacebook />
               </Link>
-              <Link
+              <a
                 href="https://twitter.com"
                 target="_blank"
                 className="text-gray-600 hover:text-[#007580] text-xl p-2 border-2 
                 border-transparent rounded-full hover:border-[#007580]"
               >
                 <FaTwitter />
-              </Link>
-              <Link
+              </a>
+              <a
                 href="https://instagram.com"
                 target="_blank"
                 className="text-gray-600 hover:text-[#007580] text-xl p-2 border-2 
                 border-transparent rounded-full hover:border-[#007580]"
               >
                 <FaInstagram />
-              </Link>
-              <Link
+              </a>
+              <a
                 href="https://pinterest.com"
                 target="_blank"
                 className="text-gray-600 hover:text-[#007580] text-xl p-2 border-2 
                 border-transparent rounded-full hover:border-[#007580]"
               >
                 <FaPinterest />
-              </Link>
-              <Link
+              </a>
+              <a
                 href="https://youtube.com"
                 target="_blank"
                 className="text-gray-600 hover:text-[#007580] text-xl p-2 border-2 
                 border-transparent rounded-full hover:border-[#007580]"
               >
                 <FaYoutube />
-              </Link>
+              </a>
             </div>
           </div>
           <div className="w-full md:w-1/4 lg:w-[105px]">
@@ -106,6 +98,7 @@ export default function footer() {
               </li>
               <li>
                 <a
+
                   href="#"
                   className="hover:text-[#007580] hover:underline hover:underline-offset-4"
                 >
@@ -114,6 +107,7 @@ export default function footer() {
               </li>
               <li>
                 <a
+
                   href="#"
                   className="hover:text-[#007580] hover:underline hover:underline-offset-4"
                 >
@@ -122,6 +116,7 @@ export default function footer() {
               </li>
               <li>
                 <a
+
                   href="#"
                   className="hover:text-[#007580] hover:underline hover:underline-offset-4"
                 >
@@ -151,6 +146,7 @@ export default function footer() {
               </li>
               <li>
                 <a
+
                   href="#"
                   className="hover:text-[#007580] hover:underline hover:underline-offset-4"
                 >
@@ -159,6 +155,7 @@ export default function footer() {
               </li>
               <li>
                 <a
+
                   href="#"
                   className="hover:text-[#007580] hover:underline hover:underline-offset-4"
                 >

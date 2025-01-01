@@ -1,5 +1,6 @@
 import React from "react";
 
+
 export default function popular_style() {
   return (
     <div className=" container mx-auto px-4 py-12 lg:py-16">

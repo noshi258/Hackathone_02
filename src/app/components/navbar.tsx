@@ -2,11 +2,8 @@ import React from "react";
 import { FaCheck } from "react-icons/fa";
 import { FaAngleDown } from "react-icons/fa";
 import { FiAlertCircle } from "react-icons/fi";
-import { LuShoppingCart } from "react-icons/lu";
-
-
-
-
+import { LuShoppingCart } from "react-icons/lu"; 
+import Link from "next/link";
 
 export default function navbar() {
   return (
@@ -30,7 +27,6 @@ export default function navbar() {
             </li>
             <li className="flex items-center space-x-1 cursor-pointer">
             <FiAlertCircle />
-
               <span>Need Help</span>
             </li>
           </ul>
@@ -63,22 +59,25 @@ export default function navbar() {
       <nav className=" w-full bg-white border-b border-gray-200">
         <div className="max-w-screen-xl mx-auto flex items-center justify-between px-4 lg:px-0 py-4">
           <div className="hidden md:flex gap-8 ml-3">
-            <a className="text-[#007580] text-[14px] font-medium" href="/">
+            <Link className="text-[#007580] text-[14px] font-medium" href="/">
               Home
-            </a>
+            </Link>
             <a
+
               className="text-[14px] font-medium hover:text-[#007580] "
               href="/product"
             >
               Shop
             </a>
             <a
+
               className="text-[14px] font-medium hover:text-[#007580]"
               href="/product"
             >
               Product
             </a>
             <a
+
               className="text-[14px] font-medium hover:text-[#007580]"
               href="/product"
             >

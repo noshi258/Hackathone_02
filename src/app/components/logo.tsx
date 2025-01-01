@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 export default function logo() {
   return (
     <div className='w-full flex flex-wrap justify-center items-center gap-20 pt-14 px-4'>
