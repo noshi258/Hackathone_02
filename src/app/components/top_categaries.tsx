@@ -4,11 +4,12 @@ import { client } from "@/sanity/lib/client";
 import React, { useState, useEffect } from "react";
 import { categories } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
+import { Product } from "types/product";
 // import { Category } from "@/types/products"
 
-export default function top_categaries() {
+export default function Topcategaries() {
 
-  const [categorie, setCategory] = useState<any[]>([]);
+  const [categorie, setCategory] = useState<Product[]>([]);
 
   useEffect(() => {
     async function fetchCategory() {
