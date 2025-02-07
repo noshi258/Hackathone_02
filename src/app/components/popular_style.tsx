@@ -1,7 +1,7 @@
 import React from "react";
 
 
-export default function popular_style() {
+export default function PopularStyle() {
   return (
     <div className=" container mx-auto px-4 py-12 lg:py-16">
       <div className="relative grid grid-cols-1 gap-8 md:grid-cols-[auto_1fr] items-center">
