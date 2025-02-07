@@ -1,80 +1,48 @@
-import React from "react";
+'use client'
+
+import { client } from "@/sanity/lib/client";
+import React, { useState, useEffect } from "react";
+import { categories } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
+// import { Category } from "@/types/products"
 
 export default function top_categaries() {
+
+  const [categorie, setCategory] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function fetchCategory() {
+      const fetchedCategory = await client.fetch(categories);
+      setCategory(fetchedCategory);
+    }
+    fetchCategory();
+  }, []);
+
   return (
-    <div>
-      <section className=" w-full px-4 py-[7rem] md:px-6">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="text-3xl font-bold tracking-tight mb-8">
-            Top Categories
-          </h2>
-          <div className=" grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <a
-              className="group aspect-square relative overflow-hidden rounded-lg"
-              href="/categories/wing-chair"
-            >
-              <img
-              src="/Image_4.png"
-                alt="Wing Chair"
-                className="transition-transform duration-300 group-hover:scale-105"
+    <div className="max-w-6xl mx-auto px-4 py-8">
+      <h1 className="text-2xl font-bold mb-6 text-center">Top Categories</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {categorie.map((category) => (
+        <div key={category._id}
+        className="border rounded-lg shadow-md p-4 hover:shadow-lg transition duration-300 ease-in-out">
+          
+          {category.image && (
+            <img 
+            src={urlFor (category.image).url()}
+            alt='image'
+            width={600}
+            height={600}
+            // sizes="100vw"
+            className="transition-transform duration-300 group-hover:scale-105"
                 sizes="100vw"
-              />
-              <div className=" absolute inset-0 bg-gradient-to-t from-black/90 to-transparent">
-                <div className="absolute bottom-0 p-6">
-                  <h3 className="mb-2 font-inter text-xl font-medium text-white">
-                    Wing Chair
-                  </h3>
-                  <p className="font-inter text-sm text-gray-200">
-                    3,584 Products
-                  </p>
-                </div>
-              </div>
-            </a>
-            <a
-              className="group aspect-square relative overflow-hidden rounded-lg"
-              href="/categories/wooden-chair"
-            >
-              <img
-                src="/Image_5.png"
-                alt="Wooden Chair"
-                className="transition-transform duration-300 group-hover:scale-105"
-                sizes="100vw"
-              />
-              <div className=" absolute inset-0 bg-gradient-to-t from-black/90 to-transparent">
-                <div className="absolute bottom-0 p-6">
-                  <h3 className="mb-2 font-inter text-xl font-medium text-white">
-                    Wooden Chair
-                  </h3>
-                  <p className="font-inter text-sm text-gray-200">
-                    157 Products
-                  </p>
-                </div>
-              </div>
-            </a>
-            <a
-              className="group aspect-square relative overflow-hidden rounded-lg"
-              href="/categories/desk-chair"
-            >
-              <img
-                src="Image_6.png"
-                alt="Desk Chair"
-                className="transition-transform duration-300 group-hover:scale-105"
-                sizes="100vw"
-              />
-              <div className=" absolute inset-0 bg-gradient-to-t from-black/90 to-transparent">
-                <div className="absolute bottom-0 p-6">
-                  <h3 className="mb-2 font-inter text-xl font-medium text-white">
-                    Desk Chair
-                  </h3>
-                  <p className="font-inter text-sm text-gray-200">
-                    154 Products
-                  </p>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
+            />
+          )}
+          {category.title} <br />
+          {category.products} 
+
+     </div>
+      ))} 
+      </div>
     </div>
   );
 }

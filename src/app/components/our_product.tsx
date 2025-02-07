@@ -1,271 +1,113 @@
-import React from 'react';
+"use client";
+
+import { client } from "@/sanity/lib/client";
+import React, { useState, useEffect } from "react";
+import { allproducts } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
 import { PiShoppingCartLight } from "react-icons/pi";
+import Link from "next/link";
+import SearchFilter from "../components/SearchFilter";  // Import SearchFilter component
+import { addToCart } from "../actions/actions";
+import Swal from "sweetalert2";
+import { Product } from 'types/product';
 
 
-export default function our_product() {
+// interface Product {
+//   id: string;
+//   badge: string;
+//   image: any;
+//   title: string;
+//   _type: "categories";
+//   price: number;
+//   priceWithoutDiscount: number;
+//   product: string;
+//   inventory: number;
+// }
+
+export default function Ourproducts() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+
+  useEffect(() => {
+    async function fetchProducts() {
+      const fetchedProducts: Product[] = await client.fetch(allproducts);
+      setProducts(fetchedProducts);
+    }
+    fetchProducts();
+  }, []);
+
+  const handleAddToCart = (e: React.MouseEvent, product :Product ) => {
+    e.preventDefault()
+    Swal.fire({
+      position: "top-right",
+      icon : "success",
+      title : `${product.title} added to cart `,
+      showConfirmButton : false,
+      timer : 1000
+    })
+    addToCart(product);
+    
+  }
+
+  // Filtering products based on search and price range
+  const filteredProducts = products.filter((product) => {
+    const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesMinPrice = minPrice === "" || product.price >= parseFloat(minPrice);
+    const matchesMaxPrice = maxPrice === "" || product.price <= parseFloat(maxPrice);
+    return matchesSearch && matchesMinPrice && matchesMaxPrice;
+  });
+
   return (
-    <div className=" container mx-auto px-4 py-20">
-          <h1 className="text-3xl text-center font-semibold text-[#1C1B1F] tracking-tight  mb-8">
-            Our Products
-          </h1>
-          <div className=" grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <div className=" group relative rounded-lg bg-white">
-              <div className="relative aspect-square overflow-hidden rounded-xl">
-                <div
-                  className="inline-flex items-center rounded-md border px-2.5 
-                        py-0.5 text-xs font-semibold transition-colors focus:outline-none 
-                        focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent 
-                        text-primary-foreground shadow absolute left-3 top-3 bg-emerald-500
-                         hover:bg-emerald-600"
-                >
-                  New
-                </div>
-                <a href="allPages/1">
-                  <img src="Image.png" alt="Chair"
-                  className="text-[#00B5A5] rounded-xl h-full w-full object-cover 
-                  transition-transform duration-300 group-hover:scale-105 hover:rounded-xl"/>
-                </a>
+    <div className="container mx-auto px-4 py-20">
+      <h1 className="text-3xl font-semibold text-[#1C1B1F] tracking-tight mb-8">
+        Our Products
+      </h1>
+
+      {/* Search and Filter Component */}
+      <SearchFilter
+        onSearch={setSearchTerm}
+        onMinPriceChange={setMinPrice}
+        onMaxPriceChange={setMaxPrice}
+      />
+
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {filteredProducts.map((product) => (
+          <div key={product.id} className="group relative rounded-lg bg-white">
+            <div className="relative aspect-square overflow-hidden rounded-xl">
+              <div className="absolute left-3 top-3 bg-orange-500 text-white px-2.5 py-0.5 text-xs font-semibold rounded-md">
+                {product.badge}
               </div>
-              <div className="mt-4 flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm text-[#1C1B1F] hover:text-[#00B5A5]">
-                    Library Stool Chair
-                  </h3>
-                  <div className="mt-1 flex items-center gap-2">
-                    <span className="text-lg font-medium text-[#1C1B1F]">$2</span>
-                  </div>
-                </div>
-                <button
-                  className="rounded-xl bg-slate-200 p-2 text-black
-                   hover:text-white transition-colors hover:bg-[#00A294]"
-                ><PiShoppingCartLight />
-                  <span className="sr-only">Add to cart</span>
-                </button>
-              </div>
-            </div>
-            <div className=" group relative rounded-lg bg-white">
-              <div className="relative aspect-square overflow-hidden rounded-xl">
-                <div
-                  className="inline-flex items-center rounded-md border px-2.5 
-            py-0.5 text-xs font-semibold transition-colors focus:outline-none
-             focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent 
-             text-primary-foreground shadow absolute left-3 top-3 bg-orange-500 hover:bg-orange-600"
-                >
-                  Sales
-                </div>
-                <a href="allPages/1">
-                  <img src="Image_1.png" alt="chair1"
-                    className="text-[#00B5A5] rounded-xl h-full w-full object-cover 
-             transition-transform duration-300 group-hover:scale-105 hover:rounded-xl"
+              <Link href={`/product/${product.id}`}>
+                {product.image && (
+                  <img
+                    src={urlFor(product.image).url()}
+                    alt={product.title}
+                    className="transition-transform duration-300 group-hover:scale-105"
                   />
-                </a>
-              </div>
-              <div className="mt-4 flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm text-[#1C1B1F] hover:text-[#00B5A5]">
-                    Library Stool Chair
-                  </h3>
-                  <div className="mt-1 flex items-center gap-2">
-                    <span className="text-lg font-medium text-[#1C1B1F]">$20</span>
-                    <span className="text-sm text-gray-500 line-through">$30</span>
-                  </div>
-                </div>
-                <button
-                  className="rounded-xl bg-slate-200 p-2 text-black
-                         hover:text-white transition-colors hover:bg-[#00A294]"
-                ><PiShoppingCartLight />
-    
-                  <span className="sr-only">Add to cart</span>
-                </button>
-              </div>
+                )}
+              </Link>
             </div>
-            <div className=" group relative rounded-lg bg-white">
-              <div className="relative aspect-square overflow-hidden rounded-xl">
-                <a href="allPages/1">
-                  <img src="Image_2.png"
-                    alt="Library Stool Chair"
-                    className="text-[#00B5A5] rounded-xl 
-                             h-full w-full object-cover transition-transform 
-                             duration-300 group-hover:scale-105 hover:rounded-xl"
-                  />
-                </a>
-              </div>
-              <div className="mt-4 flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm text-[#1C1B1F] hover:text-[#00B5A5]">
-                    Library Stool Chair
-                  </h3>
-                  <div className="mt-1 flex items-center gap-2">
-                    <span className="text-lg font-medium text-[#1C1B1F]">$20</span>
-                  </div>
+            <div className="mt-4 flex items-center justify-between">
+              <div>
+                <h3 className="text-sm text-[#1C1B1F] hover:text-[#00B5A5]">{product.title}</h3>
+                <div className="mt-1 flex items-center gap-2">
+                  <span className="text-lg font-medium text-[#1C1B1F]">${product.price}</span>
+                  <span className="text-sm text-gray-500 line-through">{product.priceWithoutDiscount}</span>
                 </div>
-                <button
-                  className="rounded-xl bg-slate-200 p-2 text-black
-             hover:text-white transition-colors hover:bg-[#00A294]"
-                ><PiShoppingCartLight />
-    
-                  <span className="sr-only">Add to cart</span>
-                </button>
               </div>
-            </div>
-            <div className=" group relative rounded-lg bg-white">
-              <div className="relative aspect-square overflow-hidden rounded-xl">
-                <a href="allPages/1">
-                  <img src="Image_3.png"
-                    alt="Library Stool Chair"
-                    className="text-[#00B5A5] rounded-xl h-full w-full 
-                        object-cover transition-transform duration-300 group-hover:scale-105 hover:rounded-xl"
-                  />
-                </a>
-              </div>
-              <div className="mt-4 flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm text-[#1C1B1F] hover:text-[#00B5A5]">
-                    Library Stool Chair
-                  </h3>
-                  <div className="mt-1 flex items-center gap-2">
-                    <span className="text-lg font-medium text-[#1C1B1F]">$20</span>
-                  </div>
-                </div>
-                <button
-                  className="rounded-xl bg-slate-200 p-2 text-black
-                             hover:text-white transition-colors hover:bg-[#00A294]"
-                > <PiShoppingCartLight />
-    
-                  <span className="sr-only">Add to cart</span>
-                </button>
-              </div>
+              <button
+               className="rounded-xl bg-slate-200 p-2 text-black hover:text-white transition-colors hover:bg-[#00A294]"
+               onClick={(e) => handleAddToCart(e, product)}>
+                <PiShoppingCartLight />
+                <span className="sr-only" >Add to cart</span>
+                
+              </button>
             </div>
           </div>
-          <div className=" grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <div className=" group relative rounded-lg bg-white">
-              <div className="relative aspect-square overflow-hidden rounded-xl">
-                <div
-                  className="inline-flex items-center rounded-md border px-2.5 
-                        py-0.5 text-xs font-semibold transition-colors focus:outline-none 
-                        focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent 
-                        text-primary-foreground shadow absolute left-3 top-3 bg-emerald-500
-                         hover:bg-emerald-600"
-                >
-                  New
-                </div>
-                <a href="allPages/1">
-                  <img src="Image_4.png" alt="Chair"
-                  className="text-[#00B5A5] rounded-xl h-full w-full object-cover 
-                  transition-transform duration-300 group-hover:scale-105 hover:rounded-xl"/>
-                </a>
-              </div>
-              <div className="mt-4 flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm text-[#1C1B1F] hover:text-[#00B5A5]">
-                    Library Stool Chair
-                  </h3>
-                  <div className="mt-1 flex items-center gap-2">
-                    <span className="text-lg font-medium text-[#1C1B1F]">$2</span>
-                  </div>
-                </div>
-                <button
-                  className="rounded-xl bg-slate-200 p-2 text-black
-                   hover:text-white transition-colors hover:bg-[#00A294]"
-                ><PiShoppingCartLight />
-                  <span className="sr-only">Add to cart</span>
-                </button>
-              </div>
-            </div>
-            <div className=" group relative rounded-lg bg-white">
-              <div className="relative aspect-square overflow-hidden rounded-xl">
-                <div
-                  className="inline-flex items-center rounded-md border px-2.5 
-            py-0.5 text-xs font-semibold transition-colors focus:outline-none
-             focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent 
-             text-primary-foreground shadow absolute left-3 top-3 bg-orange-500 hover:bg-orange-600"
-                >
-                  Sales
-                </div>
-                <a href="allPages/1">
-                  <img src="Image_7.png" alt="chair1"
-                    className="text-[#00B5A5] rounded-xl h-full w-full object-cover 
-             transition-transform duration-300 group-hover:scale-105 hover:rounded-xl"
-                  />
-                </a>
-              </div>
-              <div className="mt-4 flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm text-[#1C1B1F] hover:text-[#00B5A5]">
-                    Library Stool Chair
-                  </h3>
-                  <div className="mt-1 flex items-center gap-2">
-                    <span className="text-lg font-medium text-[#1C1B1F]">$20</span>
-                    <span className="text-sm text-gray-500 line-through">$30</span>
-                  </div>
-                </div>
-                <button
-                  className="rounded-xl bg-slate-200 p-2 text-black
-                         hover:text-white transition-colors hover:bg-[#00A294]"
-                ><PiShoppingCartLight />
-    
-                  <span className="sr-only">Add to cart</span>
-                </button>
-              </div>
-            </div>
-            <div className=" group relative rounded-lg bg-white">
-              <div className="relative aspect-square overflow-hidden rounded-xl">
-                <a href="allPages/1">
-                  <img src="Image_8.png"
-                    alt="Library Stool Chair"
-                    className="text-[#00B5A5] rounded-xl 
-                             h-full w-full object-cover transition-transform 
-                             duration-300 group-hover:scale-105 hover:rounded-xl"
-                  />
-                </a>
-              </div>
-              <div className="mt-4 flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm text-[#1C1B1F] hover:text-[#00B5A5]">
-                    Library Stool Chair
-                  </h3>
-                  <div className="mt-1 flex items-center gap-2">
-                    <span className="text-lg font-medium text-[#1C1B1F]">$20</span>
-                  </div>
-                </div>
-                <button
-                  className="rounded-xl bg-slate-200 p-2 text-black
-             hover:text-white transition-colors hover:bg-[#00A294]"
-                ><PiShoppingCartLight />
-    
-                  <span className="sr-only">Add to cart</span>
-                </button>
-              </div>
-            </div>
-            <div className=" group relative rounded-lg bg-white">
-              <div className="relative aspect-square overflow-hidden rounded-xl">
-                <a href="allPages/1">
-                  <img src="/Image.png"
-                    alt="Library Stool Chair"
-                    className="text-[#00B5A5] rounded-xl h-full w-full 
-                        object-cover transition-transform duration-300 group-hover:scale-105 hover:rounded-xl"
-                  />
-                </a>
-              </div>
-              <div className="mt-4 flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm text-[#1C1B1F] hover:text-[#00B5A5]">
-                    Library Stool Chair
-                  </h3>
-                  <div className="mt-1 flex items-center gap-2">
-                    <span className="text-lg font-medium text-[#1C1B1F]">$20</span>
-                  </div>
-                </div>
-                <button
-                  className="rounded-xl bg-slate-200 p-2 text-black
-                             hover:text-white transition-colors hover:bg-[#00A294]"
-                > <PiShoppingCartLight />
-    
-                  <span className="sr-only">Add to cart</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-  )
+        ))}
+      </div>
+    </div>
+  );
 }
