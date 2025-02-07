@@ -21,9 +21,9 @@ export default function navbar() {
 
             </li>
             <li>
-              <a className="cursor-pointer hover:underline" href="/faq">
+              <Link className="cursor-pointer hover:underline" href="/faq">
                 FAQs
-              </a>
+              </Link>
             </li>
             <li className="flex items-center space-x-1 cursor-pointer">
             <FiAlertCircle />
@@ -43,7 +43,7 @@ export default function navbar() {
             <h2 className="text-[26px] font-medium">Comforty</h2>
           </div>
           <div className="flex items-center space-w-4">
-            <a href="#">
+            <Link href="#">
               <button className="rounded-xl flex items-center space-x-2 bg-white py-2 px-4 hover:shadow-md">
               <LuShoppingCart />
 
@@ -52,7 +52,7 @@ export default function navbar() {
                   2
                 </div>
               </button>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -62,33 +62,33 @@ export default function navbar() {
             <Link className="text-[#007580] text-[14px] font-medium" href="/">
               Home
             </Link>
-            <a
+            <Link
 
               className="text-[14px] font-medium hover:text-[#007580] "
               href="/product"
             >
               Shop
-            </a>
-            <a
+            </Link>
+            <Link
 
               className="text-[14px] font-medium hover:text-[#007580]"
               href="/product"
             >
               Product
-            </a>
-            <a
+            </Link>
+            <Link
 
               className="text-[14px] font-medium hover:text-[#007580]"
               href="/product"
             >
               Pages
-            </a>
-            <a
+            </Link>
+            <Link
               className="text-[14px] font-medium hover:text-[#007580]"
               href="/about"
             >
               About
-            </a>
+            </Link>
           </div>
           <div className="hidden md:flex items-center gap-4 ml-auto">
             <span className="font-normal text-[#636270] text-[14px]">
@@ -99,7 +99,7 @@ export default function navbar() {
             </span>
           </div>
           
-        </div>
+        </div>  
       </nav>
     </header>
   );
