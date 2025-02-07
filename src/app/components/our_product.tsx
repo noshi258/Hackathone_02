@@ -15,7 +15,7 @@ import { Product } from 'types/product';
 // interface Product {
 //   id: string;
 //   badge: string;
-//   image: any;
+//   image: string;
 //   title: string;
 //   _type: "categories";
 //   price: number;
