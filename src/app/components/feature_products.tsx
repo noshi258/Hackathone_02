@@ -9,10 +9,10 @@ import Link from "next/link";
 
 
 interface Product {
-  id: any;
+  id: string;
   _id: string;
   badge: string;
-  image: any;
+  image: string;
   title: string;
   price: number;
   priceWithoutDiscount: number;
@@ -20,7 +20,7 @@ interface Product {
   // Add other properties of the product here
 }
 
-export default function feature_products() {
+export default function Featureproducts() {
   const [products, setProducts] = useState<Product[]>([]);
   
     useEffect(() => {
