@@ -6,7 +6,7 @@ import React from "react";
 interface Product {
     id: null | undefined;
     badge: string;
-    image: any;
+    image: string;
     title: string;
     description: string;
     price: number;
